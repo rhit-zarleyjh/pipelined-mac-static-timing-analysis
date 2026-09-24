@@ -4,6 +4,10 @@ Implemented three functionally equivalent architectures that accept five numeric
 
 This project explores the relationship between pipeline placement and critical-path delay, demonstrating that adding pipeline stages does not always improve maximum clock frequency.
 
+In this specific case, adding a pipeline increased the maximum frequency by approximately **13%** at the cost of a **32.9%** increase in hardware area. Adding a second pipeline had no benefit to maximum frequency and increased the design's hardware requirements further by **11.9%**, or **48.7%** over the unpipelined design. 
+
+This project provides insight as to how to effectively use open-source tools and libraries such as OpenSTA to analyze the tradeoffs between power, performance, and area to determine when techniques such as pipelining are valuable. Being able to identify the critical path (the path between stages that takes the longest) deterministically prevents wasting area by pipelining a stage that's already bottlenecked by a different stage.
+
 ## Architecture
 Three implementations of the same arithmetic operation were compared:
 - `mac_unpipelined` &ndash; MULT &rarr; ADD &rarr; ADD &rarr; REG
