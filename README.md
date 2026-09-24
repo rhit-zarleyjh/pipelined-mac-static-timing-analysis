@@ -1,8 +1,8 @@
 # Pipelined MAC Timing Analysis
 
-Implemented three functionally equivalent architectures that accept five numeric inputs `a, b, c, d, e` and compute `(a * b) + (c * d) + e`. This architecutre is known as multiply-accumulate (MAC). Each of the three implementations has a different pipeline depth, meaning the calculation is broken into different stages. I compared their timing, area, and latency values by using Yosys to synthesize each design, then using OpenSTA to reveal insights regarding timing.
+Implemented three functionally equivalent architectures that accept five numeric inputs `a, b, c, d, e` and compute `(a * b) + (c * d) + e`. This architecture is known as multiply-accumulate (MAC). Each of the three implementations has a different pipeline depth, meaning the calculation is broken into different stages. I compared their timing, area, and latency values by using Yosys to synthesize each design, then using OpenSTA to reveal insights regarding timing.
 
-This project explores the relationship between pipeline placement and critical-path delay, demonstrating that adding pipeline stages does not always improve maximum clock frequency. It 
+This project explores the relationship between pipeline placement and critical-path delay, demonstrating that adding pipeline stages does not always improve maximum clock frequency.
 
 ## Architecture
 Three implementations of the same arithmetic operation were compared:
