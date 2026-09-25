@@ -14,6 +14,60 @@ Three implementations of the same arithmetic operation were compared:
 - `mac_pipe1` &ndash; MULT &rarr; REG &rarr; ADD &rarr; ADD &rarr; REG
 - `mac_pipe2` &ndash; MULT &rarr; REG &rarr; ADD &rarr; REG &rarr; ADD &rarr; REG
 
+```
+ UNPIPELINED                                                                               
+                                                                                           
+                                                ┌───┐                                      
+ a ───────────►┌────┐                           │   │                                      
+               │MULT├─┐                         │   │                                      
+ b ───────────►└────┘ └──►┌───┐      ┌───┐      │   │                                      
+                          │ADD├─────►│ADD├──────┤REG├──────► output                        
+ c ───────────►┌────┐ ┌──►└───┘      └─┬─┘      │   │                                      
+               │MULT├─┘                │        │   │                                      
+ d ───────────►└────┘                  │        │   │                                      
+                                       │        └───┘                                      
+ e ────────────────────────────────────┘                                                   
+                                                                                           
+                                                                                           
+ ──────────────────────────────────────────────────────────────────────────────────────────
+ 1-STAGE PIPELINE                                                                         
+                                                                                           
+                           ┌───┐                                                           
+ a ───────────►┌────┐      │   │                            ┌───┐                          
+               │MULT├──────┤REG├──┐                         │   │                          
+ b ───────────►└────┘      │   │  │                         │   │                          
+                           └───┘  │   ┌───┐      ┌───┐      │   │                          
+                           ┌───┐  ├──►│ADD├─────►│ADD├──────┤REG├──────► output            
+ c ───────────►┌────┐      │   │  │   └───┘      └───┘      │   │                          
+               │MULT├──────┤REG├──┘                ▲        │   │                          
+ d ───────────►└────┘      │   │                   │        │   │                          
+                           └───┘                   │        └───┘                          
+                           ┌───┐                   │                                       
+                           │   │                   │                                       
+ e ────────────────────────┤REG├───────────────────┘                                       
+                           │   │                                                           
+                           └───┘                                                           
+                                                                                           
+────────────────────────────────────────────────────────────────────────────────────────── 
+ 2-STAGE PIPELINE                                                                         
+                                                                                           
+                           ┌───┐                                                           
+ a ───────────►┌────┐      │   │                                       ┌───┐               
+               │MULT├──────┤REG├──┐              ┌───┐                 │   │               
+ b ───────────►└────┘      │   │  │              │   │                 │   │               
+                           └───┘  │   ┌───┐      │   │      ┌───┐      │   │               
+                           ┌───┐  ├──►│ADD├──────┤REG├─────►│ADD├──────┤REG├──────► output 
+ c ───────────►┌────┐      │   │  │   └───┘      │   │      └───┘      │   │               
+               │MULT├──────┤REG├──┘              │   │        ▲        │   │               
+ d ───────────►└────┘      │   │                 └───┘        │        │   │               
+                           └───┘                              │        └───┘               
+                           ┌───┐                 ┌───┐        │                            
+                           │   │                 │   │        │                            
+ e ────────────────────────┤REG├─────────────────┤REG┼────────┘                            
+                           │   │                 │   │                                     
+                           └───┘                 └───┘                                     
+```
+
 Each implementation uses the same ready/valid interface with elastic handshakes and supports consumer stalling as well as backpressure. The implementations differ primarily in the number and placement of internal pipeline registers.
 
 The additional registers divide the combinational arithmetic into progressively smaller paths at the cost of additional latency, sequential logic, and area.
