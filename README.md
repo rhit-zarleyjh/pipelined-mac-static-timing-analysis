@@ -6,7 +6,7 @@ This project explores the relationship between pipeline placement and critical-p
 
 In this specific case, adding a pipeline increased the maximum frequency by approximately **13%** at the cost of a **32.9%** increase in hardware area. Adding a second pipeline had no benefit to maximum frequency and increased the design's hardware requirements further by **11.9%**, or **48.7%** over the unpipelined design. 
 
-This project provides insight as to how to effectively use open-source tools and libraries such as OpenSTA to analyze the tradeoffs between power, performance, and area to determine when techniques such as pipelining are valuable. Being able to identify the critical path (the path between stages that takes the longest) deterministically prevents wasting area by pipelining a stage that's already bottlenecked by a different stage.
+This project taught me how to use static timing analysis to guide architectural decisions rather instead of relying solely on logically informed assumptions. By tracing the critical path as pipeline boundaries were added, I learned to distinguish between registers that divide timing-limiting logic or just add area and latency without addressing bottlenecks.
 
 ## Architecture
 Three implementations of the same arithmetic operation were compared:
